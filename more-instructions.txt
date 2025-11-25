@@ -1,0 +1,54 @@
+For field ST (short tandem repeat), the first line must contain the source(s) from which the information is retrieved.
+The value of the source is the xref to the input publication (e.g. ST   Source(s): PubMed=some_pmid).
+The typical ST loci for human cell lines are:
+Amelogenin, CSF1PO, D2S1338, D3S1358, D5S818, D7S820, D8S1179, D13S317, D16S539, D18S51, D19S433, D21S11, FGA, Penta D, Penta E,
+TH01, TPOX, vWA, D1S1656, D2S441, D6S1043, D10S1248, D12S391, D22S1045, DXS101, DYS391, F13A01, F13B, FESFPS, LPL, Penta C, SE33
+The repeat value(s) comes right after the locus name e.g. 'ST   D16S539: 9,11'
+Typical ST loci for mouse cell lines are:
+Mouse STR 1-1, Mouse STR 1-2, Mouse STR 2-1, Mouse STR 3-2, Mouse STR 4-2, Mouse STR 5-5, Mouse STR 6-4, Mouse STR 6-7, Mouse STR 7-1, 
+Mouse STR 8-1, Mouse STR 11-2, Mouse STR 12-1, Mouse STR 13-1, Mouse STR 15-3, Mouse STR 17-2, Mouse STR 18-3, Mouse STR 19-2, Mouse STR X-1
+Typical ST loci for dog cell lines are:
+Dog FHC2010, Dog FHC2054, Dog FHC2079, Dog PEZ1, Dog PEZ3, Dog PEZ5, Dog PEZ6, Dog PEZ8, Dog PEZ12, Dog PEZ20
+
+The field CA (category) is mandatory and its value must be one of:
+Cancer cell line, Conditionally immortalized cell line, Embryonic stem cell, Factor-dependent cell line, Finite cell line, Hybrid cell line, 
+Hybridoma, Induced pluripotent stem cell, Somatic stem cell, Spontaneously immortalized cell line, Stromal cell line, Telomerase immortalized cell line, 
+Transformed cell line, Undefined cell line type
+Choose Undefined cell line type only when no other category seems relevant.
+
+The field AG represents the age of the organism when the sample was taken to create the cell line.
+If the age is not specified in the publication, use the value 'Age unspecified'.
+If the age is expressed in years then use 'Y' to specify the unit e.g. 34 years old becomes 34Y.
+If the age is expressed in months, use Y to specify the unit e.g. 11 months become 11M.
+If the age is expressed in weeks, use W to specify the unit e.g. 4 weeks become 4W.
+If the age is expressed in days, use D to specify the unit e.g. 6 days become 6D.
+If the age combines several units (years, months, weeks, days) you can concat the values e.g. 3 years and 6 months become 3Y6M.
+If the age is expressed as a range, use '-' between lower and upper boundaries e.g. between 3 and 4 weeks become 3-4W.
+It the age is expressed as being more than some value, use '>', e.g. more than 5 years beome >5Y.
+It the age is expressed as being less than some value, use '<>>', e.g. less than 6 years beome <6Y.
+The age can also be related to a developmental stage, e.g:
+Embryo, Adolescent, Blastula, Fetus, Adult, Blastocyst stage, Embryonic stage, Children, Neonate larva, Pupal stage, Larval stage, 
+Late embryonic stage, Third instar larval stage  Juvenile, Fourth-fifth instar larval stage, Dorsal closure stage, Fingerling,
+Prepubertal, First instar larval stage, Fifth instar larval stage, Tadpole stage, Morula stage, Immature, Blastula stage
+
+The field SX can take the following values:
+Female, Male, Mixed sex, Sex ambiguous, Sex unspecified
+Mixed sex value is for cell lines originating from multiple individuals having different sexes.
+
+The RX field value is a xref on the input publication. 
+The prefix is either PubMed= or DOI= followed with the identifier of the publication. THe RX line must end with a ';'.
+If the input publication has a PubMed identifier (pmid), then create a RX with this identifier and no other RX line.
+If the input publication has a DOI identifier, then create a RX with this identifier and no other RX line.
+
+The OX field represents the species of the organism from which cell line was sampled.
+The OX value is a concatenation of the following elements:
+literal 'NCBI_TaxID=', species_taxon_identifier e.g. '9606', literal separator '; ! ', 
+species_scientific_name e.g. 'Homo sapiens', literal '(', species_common_name e.g. 'Human', literal ')'.
+
+The DI field value represents a disease suffered by the organism from which the cell line originates.
+The value is a concatenation of database_name which is either 'NCIt' or 'ORDO', literal ';', disease_identifier e.g. 'Orphanet_251', 
+literal '; ', disease_name e.g. 'Chronic myeloid leukemia'
+When you encounter a disease name related to the cell line or to the organism the cell line originates from, 
+you MUST call the function "get_disease_line" with the disease name exactly as found in the input document.
+After receiving the function result, insert it into the output.
+

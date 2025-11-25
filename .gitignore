@@ -1,0 +1,7 @@
+data/*
+pdf/*
+txt_data/*
+terminologies/*
+__pycache__
+.vscode
+*.log
