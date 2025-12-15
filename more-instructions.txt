@@ -6,9 +6,9 @@ TH01, TPOX, vWA, D1S1656, D2S441, D6S1043, D10S1248, D12S391, D22S1045, DXS101, 
 The repeat value(s) comes right after the locus name e.g. 'ST   D16S539: 9,11'
 Typical ST loci for mouse cell lines are:
 Mouse STR 1-1, Mouse STR 1-2, Mouse STR 2-1, Mouse STR 3-2, Mouse STR 4-2, Mouse STR 5-5, Mouse STR 6-4, Mouse STR 6-7, Mouse STR 7-1, 
-Mouse STR 8-1, Mouse STR 11-2, Mouse STR 12-1, Mouse STR 13-1, Mouse STR 15-3, Mouse STR 17-2, Mouse STR 18-3, Mouse STR 19-2, Mouse STR X-1
+Mouse STR 8-1, Mouse STR 11-2, Mouse STR 12-1, Mouse STR 13-1, Mouse STR 15-3, Mouse STR 17-2, Mouse STR 18-3, Mouse STR 19-2, Mouse STR X-1.
 Typical ST loci for dog cell lines are:
-Dog FHC2010, Dog FHC2054, Dog FHC2079, Dog PEZ1, Dog PEZ3, Dog PEZ5, Dog PEZ6, Dog PEZ8, Dog PEZ12, Dog PEZ20
+Dog FHC2010, Dog FHC2054, Dog FHC2079, Dog PEZ1, Dog PEZ3, Dog PEZ5, Dog PEZ6, Dog PEZ8, Dog PEZ12, Dog PEZ20.
 
 The field CA (category) is mandatory and its value must be one of:
 Cancer cell line, Conditionally immortalized cell line, Embryonic stem cell, Factor-dependent cell line, Finite cell line, Hybrid cell line, 
@@ -29,7 +29,7 @@ It the age is expressed as being less than some value, use '<>>', e.g. less than
 The age can also be related to a developmental stage, e.g:
 Embryo, Adolescent, Blastula, Fetus, Adult, Blastocyst stage, Embryonic stage, Children, Neonate larva, Pupal stage, Larval stage, 
 Late embryonic stage, Third instar larval stage  Juvenile, Fourth-fifth instar larval stage, Dorsal closure stage, Fingerling,
-Prepubertal, First instar larval stage, Fifth instar larval stage, Tadpole stage, Morula stage, Immature, Blastula stage
+Prepubertal, First instar larval stage, Fifth instar larval stage, Tadpole stage, Morula stage, Immature, Blastula stage.
 
 The field SX can take the following values:
 Female, Male, Mixed sex, Sex ambiguous, Sex unspecified
@@ -48,7 +48,14 @@ species_scientific_name e.g. 'Homo sapiens', literal '(', species_common_name e.
 The DI field value represents a disease suffered by the organism from which the cell line originates.
 The value is a concatenation of database_name which is either 'NCIt' or 'ORDO', literal ';', disease_identifier e.g. 'Orphanet_251', 
 literal '; ', disease_name e.g. 'Chronic myeloid leukemia'
-When you encounter a disease name related to the cell line or to the organism the cell line originates from, 
+
+If you encounter a disease name related to the cell line or to the organism the cell line originates from, 
 you MUST call the function "get_disease_line" with the disease name exactly as found in the input document.
 After receiving the function result, insert it into the output.
+
+If you encounter the name of a body part or anatomical region related to the organism from which the cell line originates, 
+you MUST call the function get_site_line() with the site name and site type as parameters.
+After receiving the function result, insert it into the output.
+
+
 

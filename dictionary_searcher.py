@@ -15,6 +15,7 @@ class DictionarySearcher:
         self.termi_dir = "terminologies"
         self.dictionaries = dict()
         self.load_disease_terms()   
+        self.load_anatomy_terms()
 
 
     def add_dictionary(self, dict_name, lines):
@@ -74,45 +75,30 @@ class DictionarySearcher:
         self.add_dictionary("disease", lines)
 
 
+    def load_anatomy_terms(self):
+        log_it("INFO Loading anatomy terms")
+        lines = open(f"{self.termi_dir}/UBERON.tsv").readlines()
+        if lines[0].startswith("db\tid"): del lines[0]          # remove header line
+        self.add_dictionary("anatomy", lines)
+
+
 if __name__ == '__main__':
 
     lines = """
-    C101029; Atrioventricular septal defect
-    C101200; Neonatal alloimmune thrombocytopenia
-    C101201; Myelomeningocele
-    C101214; Spina bifida
-    C101268; Bilateral optic nerve hypoplasia
-    C101328; Mitochondrial myopathy
-    C102872; Pharyngeal squamous cell carcinoma
-    C102979; Congenital hydronephrosis
-    C103144; Perlman syndrome
-    C103172; Congenital bleeding disorder
-    C103186; Sexual differentiation disorder
-    C103920; Hemoglobin Barts
-    C103921; Lissencephaly
-    C103968; Pyruvate dehydrogenase deficiency
-    C105555; High grade ovarian serous adenocarcinoma
-    C105556; Low grade ovarian serous adenocarcinoma
-    C110940; Panhypopituitarism
-    C111802; Dyskeratosis congenita
-    Orphanet_101075; X-linked Charcot-Marie-Tooth disease type 1
-    Orphanet_101081; Charcot-Marie-Tooth disease type 1A
-    Orphanet_101082; Charcot-Marie-Tooth disease type 1B
-    Orphanet_101088; X-linked hyper-IgM syndrome
-    Orphanet_101089; Hyper-IgM syndrome type 2
-    Orphanet_101150; Autosomal recessive dopa-responsive dystonia
-    Orphanet_101330; Porphyria cutanea tarda
-    Orphanet_101; Dentatorubral pallidoluysian atrophy
-    Orphanet_1020; Early-onset autosomal dominant Alzheimer disease
-    Orphanet_102; Multiple system atrophy
-    Orphanet_104075; Adenocarcinoma of the small instestine
-    Orphanet_1041; Hydrops fetalis
-    Orphanet_1047; Sideroblastic anemia
-    Orphanet_1048; Isolated anencephaly/exencephaly
-    Orphanet_104; Leber hereditary optic neuropathy
-    Orphanet_1052; Mosaic variegated aneuploidy syndrome
-    Orphanet_1071; Ankyloblepharon-ectodermal defects-cleft lip/palate syndrome
-    Orphanet_107; BOR syndrome
+    disease; C101029; Atrioventricular septal defect
+    disease; C101200; Neonatal alloimmune thrombocytopenia
+    disease; C101201; Myelomeningocele
+    disease; C101214; Spina bifida
+    disease; Orphanet_1047; Sideroblastic anemia
+    disease; Orphanet_1048; Isolated anencephaly/exencephaly
+    disease; Orphanet_104; Leber hereditary optic neuropathy
+    disease; Orphanet_1052; Mosaic variegated aneuploidy syndrome
+    disease; Orphanet_1071; Ankyloblepharon-ectodermal defects-cleft lip/palate syndrome
+    disease; Orphanet_107; BOR syndrome
+    anatomy; UBERON_0000029; Right lymph node
+    anatomy; UBERON_0036014; Right posterior thigh adjacent to buttocks, hypodermis
+    anatomy; UBERON_0002072; Right posterior thigh adjacent to buttocks, hypodermis
+    anatomy; UBERON_0008779; Right subclavius, hypodermis
     """.split("\n")
 
     searcher = DictionarySearcher()
@@ -129,14 +115,14 @@ if __name__ == '__main__':
     for line in lines:
         line = line.strip()
         if line == "" : continue
-        id, term = line.split("; ")
+        dico, id, term = line.split("; ")
         print("------------------------")
-        print("Searching", id, term)
+        print("Searching", dico, id, term)
         print("------------------------")
-        for best_term, score in searcher.search_top_k("disease", term, 5):
+        for best_term, score in searcher.search_top_k(dico, term, 5):
             score_str = round(score, 5)
             if best_term["id"] == id:
-                print("OK    :", score_str, best_term)
+                print(f"MATCH {score:.5f}", best_term)
             else:
-                print("ERROR :", score_str, best_term)
+                print(f"close {score:.5f}", best_term)
     log_it("End")
